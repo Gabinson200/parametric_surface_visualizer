@@ -1,0 +1,14 @@
+{
+  "type": "paramSurfacePreset",
+  "version": 1,
+  "name": "Heart_hole",
+  "x": "(16 * sin(u)^3) * (0.2*cos(v))\n",
+  "y": "(13 * cos(u) - 5 * cos(2*u) - 2 * cos(3*u) - cos(4*u)) * (0.2*cos(v))\n",
+  "z": "(sin(5.9*v) + atan(v/3)) * (sin(v*1+pi/2))*(cos((u+pi/2)))",
+  "uMin": "0",
+  "uMax": "2 * pi",
+  "vMin": "-1",
+  "vMax": "1",
+  "uSteps": 100,
+  "vSteps": 100
+}
