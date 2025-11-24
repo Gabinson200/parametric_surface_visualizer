@@ -3,123 +3,172 @@
 <head>
   <meta charset="UTF-8" />
   <title>Parametric Surface Playground</title>
-  <link rel="stylesheet" href="style.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script async src="https://unpkg.com/es-module-shims@1.9.0/dist/es-module-shims.js"></script>
+  <link rel="stylesheet" href="style.css" />
 
+  <!-- ES module shims + import map for three.js -->
+  <script async src="https://unpkg.com/es-module-shims@1.9.0/dist/es-module-shims.js"></script>
   <script type="importmap">
-    {
+  {
     "imports": {
-        "three": "https://unpkg.com/three@0.159.0/build/three.module.js",
-        "three/addons/": "https://unpkg.com/three@0.159.0/examples/jsm/"
+      "three": "https://unpkg.com/three@0.159.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.159.0/examples/jsm/"
     }
-    }
-    </script>
+  }
+  </script>
 </head>
 <body>
   <div class="app">
     <aside class="sidebar">
       <h1>Parametric Surface Playground</h1>
 
-      <label class="field">
-        <span class="label">Example surface</span>
-        <select id="example-select">
-          <option value="sphere">Sphere</option>
-          <option value="torus">Torus</option>
-          <option value="cylinder">Cylinder</option>
-          <option value="mobius">Möbius strip</option>
-          <option value="saddle">Saddle (hyperbolic paraboloid)</option>
-          <option value="heart">Heart</option>
-          <option value="custom">Custom (keep my equations)</option>
-        </select>
-      </label>
+      <!-- Surface definition panel -->
+      <section class="panel">
+        <h2 class="subheading">Surface definition</h2>
 
-      <div class="field">
-        <span class="label">x(u, v) =</span>
-        <textarea id="expr-x" rows="2"></textarea>
-      </div>
-
-      <div class="field">
-        <span class="label">y(u, v) =</span>
-        <textarea id="expr-y" rows="2"></textarea>
-      </div>
-
-      <div class="field">
-        <span class="label">z(u, v) =</span>
-        <textarea id="expr-z" rows="2"></textarea>
-      </div>
-
-      <div class="grid-2">
-        <div class="field small">
-          <span class="label">u min</span>
-          <input id="u-min" type="text" />
-        </div>
-        <div class="field small">
-          <span class="label">u max</span>
-          <input id="u-max" type="text" />
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field small">
-          <span class="label">v min</span>
-          <input id="v-min" type="text" />
-        </div>
-        <div class="field small">
-          <span class="label">v max</span>
-          <input id="v-max" type="text" />
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field small">
-          <span class="label">u steps</span>
-          <input id="u-steps" type="number" min="4" max="200" />
-        </div>
-        <div class="field small">
-          <span class="label">v steps</span>
-          <input id="v-steps" type="number" min="4" max="200" />
-        </div>
-      </div>
-
-      <div class="field row">
-        <button id="plot-button">Plot surface</button>
-        <label class="checkbox">
-          <input type="checkbox" id="wireframe-toggle" />
-          <span>Wireframe</span>
+        <label class="field">
+          <span class="label">Example surface</span>
+          <select id="example-select">
+            <option value="sphere">Sphere</option>
+            <option value="torus">Torus</option>
+            <option value="cylinder">Cylinder</option>
+            <option value="mobius">Möbius strip</option>
+            <option value="saddle">Saddle (hyperbolic paraboloid)</option>
+            <option value="heart">Heart</option>
+            <option value="custom">Custom (keep my equations)</option>
+          </select>
         </label>
-      </div>
 
-      <p class="hint">
-        You can use: <code>sin</code>, <code>cos</code>, <code>tan</code>,
-        <code>sqrt</code>, <code>abs</code>, <code>exp</code>, <code>log</code>,
-        <code>pi</code>, <code>PI</code>, <code>^</code> for powers, etc.
-        Variables: <code>u</code>, <code>v</code>.
-      </p>
+        <div class="field">
+          <span class="label">x(u, v) =</span>
+          <textarea id="expr-x" rows="2"></textarea>
+        </div>
+
+        <div class="field">
+          <span class="label">y(u, v) =</span>
+          <textarea id="expr-y" rows="2"></textarea>
+        </div>
+
+        <div class="field">
+          <span class="label">z(u, v) =</span>
+          <textarea id="expr-z" rows="2"></textarea>
+        </div>
+
+        <div class="grid-2">
+          <div class="field small">
+            <span class="label">u min</span>
+            <input id="u-min" type="text" />
+          </div>
+          <div class="field small">
+            <span class="label">u max</span>
+            <input id="u-max" type="text" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field small">
+            <span class="label">v min</span>
+            <input id="v-min" type="text" />
+          </div>
+          <div class="field small">
+            <span class="label">v max</span>
+            <input id="v-max" type="text" />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field small">
+            <span class="label">u steps</span>
+            <input id="u-steps" type="number" min="4" max="200" />
+          </div>
+          <div class="field small">
+            <span class="label">v steps</span>
+            <input id="v-steps" type="number" min="4" max="200" />
+          </div>
+        </div>
+
+        <div class="field row">
+          <button id="plot-button" type="button">Plot surface</button>
+          <label class="checkbox">
+            <input type="checkbox" id="wireframe-toggle" />
+            <span>Wireframe</span>
+          </label>
+        </div>
+
+        <p class="hint">
+          You can use: <code>sin</code>, <code>cos</code>, <code>tan</code>,
+          <code>sqrt</code>, <code>abs</code>, <code>exp</code>, <code>log</code>,
+          <code>pi</code>, <code>PI</code>, <code>^</code> for powers, etc.
+          Variables: <code>u</code>, <code>v</code>.
+        </p>
+      </section>
 
       <div class="divider"></div>
-      <h2 class="subheading">Presets</h2>
 
-      <div class="field">
-        <span class="label">Preset name</span>
-        <input id="preset-name" type="text" placeholder="My surface" />
-      </div>
+      <!-- Preset save / load -->
+      <section class="panel">
+        <h2 class="subheading">Presets</h2>
 
-      <div class="grid-2">
-        <button id="save-preset-button" type="button">Save to file</button>
+        <div class="field">
+          <span class="label">Preset name</span>
+          <input id="preset-name" type="text" placeholder="My surface" />
+        </div>
+
+        <div class="grid-2">
+          <button id="save-preset-button" type="button">Save to file</button>
+
+          <div class="field small">
+            <span class="label">Load preset</span>
+            <input
+              id="load-preset-input"
+              type="file"
+              accept=".json,application/json"
+            />
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Fourier from drawing -->
+      <section class="panel">
+        <h2 class="subheading">Fourier curve from drawing</h2>
+
+        <canvas id="draw-canvas" width="260" height="200"></canvas>
 
         <div class="field small">
-          <span class="label">Load preset</span>
-          <input
-            id="load-preset-input"
-            type="file"
-            accept=".json,application/json"
-          />
+          <span class="label">Fourier terms (max frequency)</span>
+          <input id="fourier-terms" type="number" min="1" max="60" value="15" />
         </div>
-      </div>
 
-      <div id="status-message"></div>
+        <div class="field row">
+          <button id="fourier-clear" type="button">Clear drawing</button>
+          <button id="fourier-compute" type="button">Compute Fourier</button>
+        </div>
 
+        <div class="field">
+          <span class="label">x(u) =</span>
+          <textarea id="fourier-x-output" rows="3" readonly></textarea>
+        </div>
+
+        <div class="field">
+          <span class="label">y(u) =</span>
+          <textarea id="fourier-y-output" rows="3" readonly></textarea>
+        </div>
+
+        <div class="field row">
+          <button id="fourier-to-visualizer" type="button">
+            Use in visualizer
+          </button>
+        </div>
+
+        <p class="hint">
+          Draw a single stroke. The Fourier series approximates the curve
+          as sums of <code>sin(k*u)</code> and <code>cos(k*u)</code>.
+          You can copy the equations above into the x(u,v) / y(u,v)
+          fields, or use the button to send them automatically.
+        </p>
+      </section>
 
       <div id="status-message"></div>
     </aside>
@@ -127,6 +176,6 @@
     <main id="viewer"></main>
   </div>
 
-  <script type="module" src="main.js"></script>
+  <script type="module" src="./main.js"></script>
 </body>
 </html>

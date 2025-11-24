@@ -1,0 +1,14 @@
+{
+  "type": "paramSurfacePreset",
+  "version": 1,
+  "name": "fourier_around_z",
+  "x": "(3 -0.0278 - 0.4357*cos(1*u) + 0.1445*sin(1*u) + 0.0804*cos(2*u) + 0.0575*sin(2*u) - 0.0079*cos(3*u) - 0.0072*sin(3*u) + 0.0208*cos(4*u) - 0.0166*sin(4*u) - 0.0007*cos(5*u) + 0.0138*sin(5*u))*cos(v)",
+  "y": "sin(v)",
+  "z": "(3 -0.0441 - 0.1243*cos(1*u) - 0.3479*sin(1*u) + 0.1066*cos(2*u) - 0.1676*sin(2*u) - 0.0462*cos(3*u) - 0.0061*sin(3*u) - 0.0022*cos(4*u) + 0.0520*sin(4*u) - 0.0233*cos(5*u) + 0.0199*sin(5*u))",
+  "uMin": "0",
+  "uMax": "2*pi",
+  "vMin": "0",
+  "vMax": "2*pi",
+  "uSteps": 40,
+  "vSteps": 40
+}
